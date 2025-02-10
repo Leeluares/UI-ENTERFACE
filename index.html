@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register - Pet Adoption System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Courier New", Courier, monospace;
+      background-color: skyblue; /* Set background to sky blue */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.2); /* 20% transparent white */
+      border-radius: 10px;
+      width: 400px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .container h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .form-toggle button {
+      width: 50%;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
+      color: white;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .form-toggle button.active {
+      background: black;
+      color: white;
+    }
+
+    .form {
+      display: none;
+    }
+
+    .form.active {
+      display: block;
+    }
+
+    .input-group {
+      position: relative;
+      margin: 10px 0;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px 10px 10px 40px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #999;
+      font-size: 18px;
+    }
+
+    .form button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form button:hover {
+      background: rgba(0, 0, 0, 1); /* Fully opaque black on hover */
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .social-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .social-button img {
+      height: 20px;
+      margin-right: 8px;
+    }
+
+    .social-button:hover {
+      background: rgba(0, 0, 0, 1); /* Fully opaque black on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pet Adoption System</h1>
+    <div class="form-toggle">
+      <button id="login-btn" class="active" onclick="toggleForm('login')">Login</button>
+      <button id="register-btn" onclick="toggleForm('register')">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="login-form" class="form active">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Login</button>
+      <div class="social-buttons">
+        <button class="social-button facebook">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+          Login with Facebook
+        </button>
+        <button class="social-button google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google Logo">
+          Login with Google
+        </button>
+      </div>
+    </form>
+
+    <!-- Register Form -->
+    <form id="register-form" class="form">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Full Name" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" placeholder="Email" required>
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Register</button>
+      <div class="social-buttons">
+        <button class="social-button facebook">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
+          Register with Facebook
+        </button>
+        <button class="social-button google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google Logo">
+          Register with Google
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleForm(form) {
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const loginBtn = document.getElementById('login-btn');
+      const registerBtn = document.getElementById('register-btn');
+
+      if (form === 'login') {
+        loginForm.classList.add('active');
+        registerForm.classList.remove('active');
+        loginBtn.classList.add('active');
+        registerBtn.classList.remove('active');
+      } else {
+        registerForm.classList.add('active');
+        loginForm.classList.remove('active');
+        registerBtn.classList.add('active');
+        loginBtn.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>
