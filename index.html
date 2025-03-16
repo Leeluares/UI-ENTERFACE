@@ -15,7 +15,8 @@
 
     body {
       font-family: "Courier New", Courier, monospace;
-      background-color: skyblue; /* Set background to sky blue */
+      font-size: 16px;
+      background: url('https://www.westjetcargo.com/content/wjcargo/ca/en/products/pets/_jcr_content/root/container/imagecontent/image.coreimg.100.1920.jpeg/1741731670240/2024-pet-banner.jpeg') no-repeat center center/cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -23,7 +24,7 @@
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.2); /* 20% transparent white */
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       width: 400px;
       padding: 20px;
@@ -34,6 +35,7 @@
     .container h1 {
       margin-bottom: 20px;
       color: #333;
+      font-size: 20px;
     }
 
     .form-toggle {
@@ -47,9 +49,10 @@
       padding: 10px;
       border: none;
       cursor: pointer;
-      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
+      background: rgba(0, 0, 0, 0.8);
       color: white;
       font-weight: bold;
+      font-size: 16px;
       transition: background 0.3s, color 0.3s;
     }
 
@@ -76,6 +79,7 @@
       padding: 10px 10px 10px 40px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 16px;
     }
 
     .input-group i {
@@ -92,7 +96,7 @@
       padding: 10px;
       border: none;
       border-radius: 5px;
-      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
+      background: rgba(0, 0, 0, 0.8);
       color: white;
       font-size: 16px;
       cursor: pointer;
@@ -100,7 +104,7 @@
     }
 
     .form button:hover {
-      background: rgba(0, 0, 0, 1); /* Fully opaque black on hover */
+      background: rgba(0, 0, 0, 1);
     }
 
     .social-buttons {
@@ -114,24 +118,27 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex: 1;
-      padding: 10px;
+      padding: 15px;
       border: none;
-      border-radius: 5px;
-      background: rgba(0, 0, 0, 0.8); /* Black with 80% transparency */
-      color: white;
+      border-radius: 50%;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 18px;
       transition: background 0.3s;
+      color: white;
+      width: 50px;
+      height: 50px;
     }
 
-    .social-button img {
-      height: 20px;
-      margin-right: 8px;
+    .facebook {
+      background: #3b5998;
     }
 
-    .social-button:hover {
-      background: rgba(0, 0, 0, 1); /* Fully opaque black on hover */
+    .google {
+      background: #db4437;
+    }
+
+    .social-button i {
+      margin: 0;
     }
   </style>
 </head>
@@ -143,8 +150,15 @@
       <button id="register-btn" onclick="toggleForm('register')">Register</button>
     </div>
 
-    <!-- Login Form -->
-    <form id="login-form" class="form active">
+    <form id="login-form" class="form active" onsubmit="handleLogin(event)">
+      <div class="social-buttons">
+        <button class="social-button facebook" onclick="socialLogin('Facebook')">
+          <i class="fab fa-facebook-f"></i>
+        </button>
+        <button class="social-button google" onclick="socialLogin('Google')">
+          <i class="fab fa-google"></i>
+        </button>
+      </div>
       <div class="input-group">
         <i class="fas fa-user"></i>
         <input type="text" placeholder="Username" required>
@@ -154,20 +168,17 @@
         <input type="password" placeholder="Password" required>
       </div>
       <button type="submit">Login</button>
-      <div class="social-buttons">
-        <button class="social-button facebook">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
-          Login with Facebook
-        </button>
-        <button class="social-button google">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google Logo">
-          Login with Google
-        </button>
-      </div>
     </form>
 
-    <!-- Register Form -->
-    <form id="register-form" class="form">
+    <form id="register-form" class="form" onsubmit="handleRegister(event)">
+      <div class="social-buttons">
+        <button class="social-button facebook" onclick="socialLogin('Facebook')">
+          <i class="fab fa-facebook-f"></i>
+        </button>
+        <button class="social-button google" onclick="socialLogin('Google')">
+          <i class="fab fa-google"></i>
+        </button>
+      </div>
       <div class="input-group">
         <i class="fas fa-user"></i>
         <input type="text" placeholder="Full Name" required>
@@ -181,37 +192,29 @@
         <input type="password" placeholder="Password" required>
       </div>
       <button type="submit">Register</button>
-      <div class="social-buttons">
-        <button class="social-button facebook">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook Logo">
-          Register with Facebook
-        </button>
-        <button class="social-button google">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google Logo">
-          Register with Google
-        </button>
-      </div>
     </form>
   </div>
 
   <script>
     function toggleForm(form) {
-      const loginForm = document.getElementById('login-form');
-      const registerForm = document.getElementById('register-form');
-      const loginBtn = document.getElementById('login-btn');
-      const registerBtn = document.getElementById('register-btn');
+      document.getElementById('login-form').classList.toggle('active', form === 'login');
+      document.getElementById('register-form').classList.toggle('active', form === 'register');
+      document.getElementById('login-btn').classList.toggle('active', form === 'login');
+      document.getElementById('register-btn').classList.toggle('active', form === 'register');
+    }
 
-      if (form === 'login') {
-        loginForm.classList.add('active');
-        registerForm.classList.remove('active');
-        loginBtn.classList.add('active');
-        registerBtn.classList.remove('active');
-      } else {
-        registerForm.classList.add('active');
-        loginForm.classList.remove('active');
-        registerBtn.classList.add('active');
-        loginBtn.classList.remove('active');
-      }
+    function handleLogin(event) {
+      event.preventDefault();
+      alert('Logged in successfully!');
+    }
+
+    function handleRegister(event) {
+      event.preventDefault();
+      alert('Registered successfully!');
+    }
+
+    function socialLogin(platform) {
+      alert(platform + ' login successful!');
     }
   </script>
 </body>
