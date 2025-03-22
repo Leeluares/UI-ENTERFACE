@@ -44,7 +44,7 @@
       margin-bottom: 20px;
     }
 
-    .form-toggle button {
+    .form-toggle label {
       width: 50%;
       padding: 10px;
       border: none;
@@ -54,19 +54,32 @@
       font-weight: bold;
       font-size: 16px;
       transition: background 0.3s, color 0.3s;
+      text-align: center;
+      display: inline-block;
     }
 
-    .form-toggle button.active {
+    #login:checked ~ .login-form,
+    #register:checked ~ .register-form {
+      display: block;
+    }
+
+    #login:checked ~ .form-toggle .login-label,
+    #register:checked ~ .form-toggle .register-label {
       background: black;
       color: white;
     }
 
-    .form {
+    #login:checked ~ .form-toggle .register-label,
+    #register:checked ~ .form-toggle .login-label {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    input[type="radio"] {
       display: none;
     }
 
-    .form.active {
-      display: block;
+    .form {
+      display: none;
     }
 
     .input-group {
@@ -145,17 +158,22 @@
 <body>
   <div class="container">
     <h1>Pet Adoption System</h1>
+
+    <!-- Hidden radio buttons for toggling forms -->
+    <input type="radio" id="login" name="form-toggle" checked>
+    <input type="radio" id="register" name="form-toggle">
+
     <div class="form-toggle">
-      <button id="login-btn" class="active" onclick="toggleForm('login')">Login</button>
-      <button id="register-btn" onclick="toggleForm('register')">Register</button>
+      <label for="login" class="login-label">Login</label>
+      <label for="register" class="register-label">Register</label>
     </div>
 
-    <form id="login-form" class="form active" onsubmit="handleLogin(event)">
+    <form class="form login-form">
       <div class="social-buttons">
-        <button class="social-button facebook" onclick="socialLogin('Facebook')">
+        <button class="social-button facebook">
           <i class="fab fa-facebook-f"></i>
         </button>
-        <button class="social-button google" onclick="socialLogin('Google')">
+        <button class="social-button google">
           <i class="fab fa-google"></i>
         </button>
       </div>
@@ -170,12 +188,12 @@
       <button type="submit">Login</button>
     </form>
 
-    <form id="register-form" class="form" onsubmit="handleRegister(event)">
+    <form class="form register-form">
       <div class="social-buttons">
-        <button class="social-button facebook" onclick="socialLogin('Facebook')">
+        <button class="social-button facebook">
           <i class="fab fa-facebook-f"></i>
         </button>
-        <button class="social-button google" onclick="socialLogin('Google')">
+        <button class="social-button google">
           <i class="fab fa-google"></i>
         </button>
       </div>
@@ -194,28 +212,5 @@
       <button type="submit">Register</button>
     </form>
   </div>
-
-  <script>
-    function toggleForm(form) {
-      document.getElementById('login-form').classList.toggle('active', form === 'login');
-      document.getElementById('register-form').classList.toggle('active', form === 'register');
-      document.getElementById('login-btn').classList.toggle('active', form === 'login');
-      document.getElementById('register-btn').classList.toggle('active', form === 'register');
-    }
-
-    function handleLogin(event) {
-      event.preventDefault();
-      alert('Logged in successfully!');
-    }
-
-    function handleRegister(event) {
-      event.preventDefault();
-      alert('Registered successfully!');
-    }
-
-    function socialLogin(platform) {
-      alert(platform + ' login successful!');
-    }
-  </script>
 </body>
-</html>
+          </html>
